@@ -10,3 +10,4 @@ plugins {
 }
 
 rootProject.name = "flax-ktor-plugins-examples"
+include("ktor-server-kafka")

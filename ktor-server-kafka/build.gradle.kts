@@ -1,9 +1,7 @@
-import io.github.flaxoos.ktor.versionOf
-import kotlinx.css.i
 import java.net.URI
 
 plugins {
-    kotlin("jvm")
+    kotlin("jvm") version libs.versions.kotlin
     id("io.ktor.plugin") version libs.versions.ktor
     alias(libs.plugins.kotlin.serialization)
     application
@@ -32,7 +30,7 @@ dependencies {
     implementation(libs.ktor.serialization.kotlinx.json)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.logback.classic)
-    implementation("io.github.flaxoos:ktor-server-kafka:${property("VERSION")}")
+    implementation("io.github.flaxoos:ktor-server-kafka:1.2.1")
     testImplementation(libs.kotest.runner.junit5)
     testImplementation(libs.ktor.server.test.host)
     testImplementation(libs.testcontainers)
