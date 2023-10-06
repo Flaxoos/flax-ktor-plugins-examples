@@ -11,3 +11,4 @@ plugins {
 
 rootProject.name = "flax-ktor-plugins-examples"
 include("ktor-server-kafka")
+include("ktor-server-rate-limiting")
