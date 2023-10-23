@@ -5,19 +5,14 @@ plugins {
 }
 subprojects {
     repositories {
-        mavenLocal()
         mavenCentral()
-        maven {
-            name = "GitHubPackages"
-            url =
-                URI(
-                    "https://maven.pkg.github.com/flaxoos/${project.name}"
-                )
-            credentials {
-                username = gprUser
-                password = gprReadToken
-            }
-        }
+//        maven {
+//            url = URI("https://s01.oss.sonatype.org/service/local/repositories/iogithubflaxoos-1000/content")
+//            credentials {
+//                username = project.findProperty("ossrh.username")!!.toString()
+//                password = project.findProperty("ossrh.password")!!.toString()
+//            }
+//        }
     }
 }
 
@@ -27,9 +22,3 @@ idea {
         isDownloadJavadoc = true
     }
 }
-
-private val Project.gprUser
-    get() = findProperty("gpr.user") as String? ?: System.getenv("GPR_USER")
-
-private val Project.gprReadToken
-    get() = findProperty("gpr.read.key") as String? ?: System.getenv("GPR_READ_TOKEN")
