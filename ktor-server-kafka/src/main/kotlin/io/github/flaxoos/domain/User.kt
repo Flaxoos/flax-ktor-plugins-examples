@@ -1,4 +1,4 @@
-package flaxoos.github.io.domain
+package io.github.flaxoos.domain
 
 import com.sksamuel.avro4k.AvroNamespace
 import kotlinx.serialization.Serializable

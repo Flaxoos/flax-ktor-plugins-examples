@@ -1,4 +1,4 @@
-package flaxoos.github.io
+package io.github.flaxoos
 
 import io.github.flaxoos.ktor.server.plugins.ratelimiter.RateLimiting
 import io.ktor.serialization.kotlinx.json.json

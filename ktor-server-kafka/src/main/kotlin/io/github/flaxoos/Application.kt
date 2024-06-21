@@ -1,6 +1,6 @@
-package flaxoos.github.io
+package io.github.flaxoos
 
-import flaxoos.github.io.domain.User
+import io.github.flaxoos.domain.User
 import io.github.flaxoos.ktor.server.plugins.kafka.MessageTimestampType
 import io.github.flaxoos.ktor.server.plugins.kafka.TopicName
 import io.github.flaxoos.ktor.server.plugins.kafka.admin

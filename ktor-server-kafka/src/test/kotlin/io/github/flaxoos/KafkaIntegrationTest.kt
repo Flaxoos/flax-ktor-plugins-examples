@@ -1,6 +1,6 @@
-package flaxoos.github.io
+package io.github.flaxoos
 
-import flaxoos.github.io.domain.User
+import io.github.flaxoos.domain.User
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation

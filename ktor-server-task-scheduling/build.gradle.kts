@@ -2,7 +2,6 @@ plugins {
     kotlin("jvm")
     id("io.ktor.plugin") version libs.versions.ktor
     alias(libs.plugins.kotlin.serialization)
-    application
 }
 
 kotlin {
@@ -14,14 +13,25 @@ kotlin {
 dependencies {
     implementation(libs.ktor.server.core)
     implementation(libs.ktor.server.cio)
+    implementation(libs.logback.classic)
     implementation(libs.ktor.server.contentNegotiation)
     implementation(libs.ktor.serialization.kotlinx.json)
     implementation(libs.kotlinx.serialization.json)
-    implementation(libs.logback.classic)
-    implementation("io.github.flaxoos:ktor-server-rate-limiting:${project.property("version") as String}")
+    implementation("io.github.flaxoos:ktor-server-task-scheduling:${project.property("version") as String}")
+    testImplementation(libs.testcontainers)
     testImplementation(libs.kotest.runner.junit5)
     testImplementation(libs.ktor.server.test.host)
     testImplementation(libs.ktor.client.contentNegotiation)
+    testImplementation(libs.exposed.core)
+    testImplementation(libs.exposed.jdbc)
+    testImplementation(libs.exposed.dao)
+    testImplementation(libs.exposed.kotlin.datetime)
+    testImplementation(libs.mongodb.driver.kotlin.coroutine)
+    testImplementation(libs.kotest.extensions.testcontainers)
+    testImplementation(libs.testcontainers.redis)
+    testImplementation(libs.testcontainers.postgres)
+    testImplementation(libs.testcontainers.mongodb)
+    testRuntimeOnly(libs.postgresql)
 }
 
 application {

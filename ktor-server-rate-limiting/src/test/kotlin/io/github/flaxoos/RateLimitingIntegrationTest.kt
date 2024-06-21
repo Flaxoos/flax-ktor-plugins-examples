@@ -1,4 +1,4 @@
-package flaxoos.github.io
+package io.github.flaxoos
 
 import io.kotest.assertions.withClue
 import io.kotest.core.spec.style.FunSpec

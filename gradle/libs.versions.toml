@@ -1,13 +1,19 @@
 [versions]
 # Core technologies
-kotlin = "1.9.0"
+kotlin = "1.9.20"
 java = "11"
 gradle = "8.2.1"
 shadow = "8.1.1"
-kotlinx-serialization = "1.6.0"
+kotlinx-serialization = "1.7.0"
 
 # Web Framework
-ktor = "2.3.2"
+ktor = "2.3.10"
+
+# Database
+postgres = "42.6.0"
+exposed = "0.44.0"
+mongodb = "4.11.0"
+
 
 # Logging
 logback = "1.4.11"
@@ -25,6 +31,7 @@ kotest-embedded-kafka = "2.0.0"
 junit = "5.9.2"
 mockk = "1.11.0"
 testcontainers = "1.19.0"
+redis-testcontainers = "1.6.4"
 
 # Code Quality and Coverage
 ktlint = "11.5.1"
@@ -79,10 +86,10 @@ ktor-server-test-host = { module = "io.ktor:ktor-server-test-host", version.ref 
 kotest-runner-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 kotest-extensions-testcontainers = { module = "io.kotest.extensions:kotest-extensions-testcontainers", version.ref = "kotest-test-containers" }
-kotest-extensions-testcontainers-kafka = { module = "io.kotest.extensions:kotest-extensions-testcontainers-kafka", version.ref = "kotest-test-containers" }
 testcontainers = { module = "org.testcontainers:testcontainers", version.ref = "testcontainers" }
-testcontainers-bom = { module = "org.testcontainers:testcontainers-bom", version.ref = "testcontainers" }
-testcontainers-kafka = { module = "org.testcontainers:kafka", version.ref = "testcontainers" }
+testcontainers-redis = { module = "com.redis.testcontainers:testcontainers-redis", version.ref = "redis-testcontainers" }
+testcontainers-mongodb = { module = "org.testcontainers:mongodb", version.ref = "testcontainers" }
+testcontainers-postgres = { module = "org.testcontainers:postgresql", version.ref = "testcontainers" }
 
 # Messaging Libraries
 kafka-clients = { module = "org.apache.kafka:kafka-clients", version.ref = "kafka" }
@@ -91,6 +98,15 @@ kafka-schema-registry-client = { module = "io.confluent:kafka-schema-registry-cl
 kafka-avro-serializer = { module = "io.confluent:kafka-avro-serializer", version.ref = "confluent" }
 avro4k-core = { module = "com.sksamuel.avro4k:avro4k-core", version.ref = "avro4k" }
 avro-tools = {module = "org.apache.avro:avro-tools", version.ref = "avro"}
+
+# Database
+postgresql = { module = "org.postgresql:postgresql", version.ref = "postgres" }
+exposed-core = { module = "org.jetbrains.exposed:exposed-core", version.ref = "exposed" }
+exposed-dao = { module = "org.jetbrains.exposed:exposed-dao", version.ref = "exposed" }
+exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc", version.ref = "exposed" }
+exposed-json = { module = "org.jetbrains.exposed:exposed-json", version.ref = "exposed" }
+exposed-kotlin-datetime = { module = "org.jetbrains.exposed:exposed-kotlin-datetime", version.ref = "exposed" }
+mongodb-driver-kotlin-coroutine = { module = "org.mongodb:mongodb-driver-kotlin-coroutine", version.ref = "mongodb" }
 
 # Code Quality and Coverage plugins
 ktlint-gradlePlugin = { module = "org.jlleitschuh.gradle:ktlint-gradle", version.ref = "ktlint" }
