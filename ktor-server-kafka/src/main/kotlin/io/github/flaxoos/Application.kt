@@ -22,7 +22,6 @@ import io.github.flaxoos.ktor.server.plugins.kafka.topic
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.Application
 import io.ktor.server.application.ApplicationStarted
-import io.ktor.server.application.call
 import io.ktor.server.application.createApplicationPlugin
 import io.ktor.server.application.hooks.MonitoringEvent
 import io.ktor.server.application.install
@@ -36,7 +35,9 @@ import org.apache.kafka.clients.producer.ProducerRecord
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.TimeUnit
 
-fun main(args: Array<String>): Unit = io.ktor.server.cio.EngineMain.main(args)
+fun main(args: Array<String>): Unit =
+    io.ktor.server.cio.EngineMain
+        .main(args)
 
 fun Application.module() {
     configureRouting()
@@ -107,12 +108,13 @@ fun Application.configureSerialization() {
     }
 }
 
-val checkClients = createApplicationPlugin("checkClients") {
-    on(MonitoringEvent(ApplicationStarted)) { app ->
-        app.kafkaAdminClient.also { app.log.info("Validated admin client") }
-        app.kafkaProducer.also { app.log.info("Validated producer") }
-        app.kafkaConsumer.also { app.log.info("Validated consumer") }
-        app.kafkaConsumerJob.also { app.log.info("Validated consumer job") }
-        app.schemaRegistryClient.also { app.log.info("Validated schema registry client") }
+val checkClients =
+    createApplicationPlugin("checkClients") {
+        on(MonitoringEvent(ApplicationStarted)) { app ->
+            app.kafkaAdminClient.also { app.log.info("Validated admin client") }
+            app.kafkaProducer.also { app.log.info("Validated producer") }
+            app.kafkaConsumer.also { app.log.info("Validated consumer") }
+            app.kafkaConsumerJob.also { app.log.info("Validated consumer job") }
+            app.schemaRegistryClient.also { app.log.info("Validated schema registry client") }
+        }
     }
-}

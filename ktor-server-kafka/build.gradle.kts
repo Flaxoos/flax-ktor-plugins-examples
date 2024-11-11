@@ -1,7 +1,7 @@
 plugins {
     kotlin("jvm")
     id("io.ktor.plugin") version libs.versions.ktor
-    alias(libs.plugins.kotlin.serialization) apply false
+    alias(libs.plugins.kotlin.serialization)
     application
 }
 

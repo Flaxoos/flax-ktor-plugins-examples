@@ -1,6 +1,6 @@
 plugins {
     idea
-    kotlin("multiplatform") version "1.9.20" apply false
+    kotlin("multiplatform") version "2.0.20" apply false
 }
 
 allprojects {
@@ -8,7 +8,7 @@ allprojects {
         mavenCentral()
         mavenLocal()
         maven {
-            url =uri( "https://packages.confluent.io/maven/")
+            url = uri("https://packages.confluent.io/maven/")
         }
     }
 }
