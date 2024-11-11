@@ -15,62 +15,61 @@ import io.ktor.server.config.MapApplicationConfig
 import io.ktor.server.config.mergeWith
 import io.ktor.server.testing.testApplication
 import kotlinx.coroutines.delay
-import kotlinx.datetime.Clock
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
-import org.testcontainers.containers.DockerComposeContainer
 import org.testcontainers.containers.MongoDBContainer
 import org.testcontainers.containers.PostgreSQLContainer
 import org.testcontainers.containers.wait.strategy.Wait
-import org.testcontainers.containers.wait.strategy.Wait.forListeningPort
 import org.testcontainers.utility.DockerImageName
-import java.io.File
 import kotlin.time.Duration.Companion.minutes
-import kotlin.time.Duration.Companion.seconds
 import kotlin.time.toJavaDuration
 
-
-class RateLimitingIntegrationTest : FunSpec() {
+class TaskSchedulingIntegrationTest : FunSpec() {
     private val mongodb = MongoDBContainer(DockerImageName.parse("mongo:6.0.4"))
-    private val mongodbContainer = install(ContainerExtension(mongodb)) {
-        waitingFor(Wait.forListeningPort())
-    }
+    private val mongodbContainer =
+        install(ContainerExtension(mongodb)) {
+            waitingFor(Wait.forListeningPort())
+        }
     private val redis = RedisContainer(DockerImageName.parse("redis:latest"))
-    private val redisContainer = install(ContainerExtension(redis)) {
-        waitingFor(Wait.forListeningPort()).withStartupTimeout(1.minutes.toJavaDuration())
-    }
+    private val redisContainer =
+        install(ContainerExtension(redis)) {
+            waitingFor(Wait.forListeningPort()).withStartupTimeout(1.minutes.toJavaDuration())
+        }
     private val postgres = PostgreSQLContainer(DockerImageName.parse("postgres:13.3"))
-    private val postgresContainer = install(ContainerExtension(postgres)) {
-        waitingFor(Wait.forListeningPort())
-    }
+    private val postgresContainer =
+        install(ContainerExtension(postgres)) {
+            waitingFor(Wait.forListeningPort())
+        }
 
     init {
         test("Task should execute") {
             testApplication {
+                application {
+                    module()
+                }
                 environment {
-                    config = config.mergeWith(
-                        MapApplicationConfig(
-                            listOf(
-                                "mongodb.connectionString" to mongodbContainer.connectionString,
-                                "postgres.jdbcUrl" to postgresContainer.jdbcUrl,
-                                "postgres.username" to postgresContainer.username,
-                                "postgres.password" to postgresContainer.password,
-                                "redis.host" to redisContainer.host,
-                                "redis.port" to redisContainer.firstMappedPort.toString(),
-                                "redis.username" to "flaxoos",
-                                "redis.password" to "password",
-                            )
+                    config =
+                        config.mergeWith(
+                            MapApplicationConfig(
+                                listOf(
+                                    "mongodb.connectionString" to mongodbContainer.connectionString,
+                                    "postgres.jdbcUrl" to postgresContainer.jdbcUrl,
+                                    "postgres.username" to postgresContainer.username,
+                                    "postgres.password" to postgresContainer.password,
+                                    "redis.host" to redisContainer.host,
+                                    "redis.port" to redisContainer.firstMappedPort.toString(),
+                                    "redis.username" to "flaxoos",
+                                    "redis.password" to "password",
+                                ),
+                            ),
                         )
-                    )
-                    modules += { module() }
                 }
                 startApplication()
 
-                val client = createClient {
-                    install(ContentNegotiation) {
-                        json()
+                val client =
+                    createClient {
+                        install(ContentNegotiation) {
+                            json()
+                        }
                     }
-                }
 
                 delay(3500)
 

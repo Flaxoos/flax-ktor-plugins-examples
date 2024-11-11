@@ -26,9 +26,8 @@ class KafkaIntegrationTest : FunSpec() {
         val kafka: DockerComposeContainer<*> =
             DockerComposeContainer(
                 "kafka",
-                listOf(File(Companion::class.java.getResource("/docker-compose.yaml")!!.file))
-            )
-                .withExposedService("zookeeper", 2181)
+                listOf(File(Companion::class.java.getResource("/docker-compose.yaml")!!.file)),
+            ).withExposedService("zookeeper", 2181)
                 .withExposedService("broker", 29092)
                 .withExposedService("schema-registry", 8081)
                 .waitingFor("zookeeper", forListeningPort().withStartupTimeout(waitTimeout))
@@ -47,17 +46,22 @@ class KafkaIntegrationTest : FunSpec() {
 
         test("Kafka should be setup with a producer and consumer") {
             testApplication {
-                val client = createClient {
-                    install(ContentNegotiation) {
-                        json()
-                    }
+                application {
+                    module()
                 }
+                val client =
+                    createClient {
+                        install(ContentNegotiation) {
+                            json()
+                        }
+                    }
                 val id = "test-kafka-user-id"
                 val user = User(id, "test-kafka-username")
-                val response = client.post("welcome") {
-                    contentType(ContentType.Application.Json)
-                    setBody(user)
-                }
+                val response =
+                    client.post("welcome") {
+                        contentType(ContentType.Application.Json)
+                        setBody(user)
+                    }
 
                 response.status shouldBe HttpStatusCode.OK
 

@@ -9,23 +9,27 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.http.userAgent
 import io.ktor.server.testing.testApplication
 
-
 class RateLimitingIntegrationTest : FunSpec() {
-
     init {
         test("Limiting should apply") {
             testApplication {
+                application {
+                    configureRouting()
+                }
                 (1..20).map { i ->
                     withClue("request $i") {
-                        client.get("welcome") {
-                            this.headers {
-                                userAgent("test")
+                        client
+                            .get("welcome") {
+                                this.headers {
+                                    userAgent("test")
+                                }
+                            }.status
+                            .also { println("Status: $it") } shouldBe
+                            if (i <= 10) {
+                                HttpStatusCode.OK
+                            } else {
+                                HttpStatusCode.TooManyRequests
                             }
-                        }.status.also { println("Status: $it") } shouldBe if (i <= 10) {
-                            HttpStatusCode.OK
-                        } else {
-                            HttpStatusCode.TooManyRequests
-                        }
                     }
                 }
             }

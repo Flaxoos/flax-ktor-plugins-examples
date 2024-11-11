@@ -7,8 +7,6 @@ import io.github.flaxoos.ktor.server.plugins.taskscheduling.managers.lock.databa
 import io.github.flaxoos.ktor.server.plugins.taskscheduling.managers.lock.redis.redis
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.Application
-import io.ktor.server.application.application
-import io.ktor.server.application.call
 import io.ktor.server.application.install
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.response.respond
@@ -17,7 +15,9 @@ import io.ktor.server.routing.routing
 import io.ktor.util.AttributeKey
 import org.jetbrains.exposed.sql.Database
 
-fun main(args: Array<String>): Unit = io.ktor.server.cio.EngineMain.main(args)
+fun main(args: Array<String>): Unit =
+    io.ktor.server.cio.EngineMain
+        .main(args)
 
 val attributeKey = AttributeKey<MutableList<String>>("task-outputs")
 
@@ -93,7 +93,7 @@ fun Application.module() {
     }
     routing {
         get("tasks") {
-            call.respond(application.attributes[attributeKey])
+            call.respond(this@module.attributes[attributeKey])
         }
     }
 }
